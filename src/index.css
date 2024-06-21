@@ -211,3 +211,9 @@ button:focus-visible {
 .login-page a:hover, .register-page a {
   text-decoration: underline;
 }
+
+.add-thread {
+  position: 'fixed';
+  bottom: '3rem';
+  right: '3rem' 
+}

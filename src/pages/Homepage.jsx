@@ -37,7 +37,7 @@ function Homepage() {
             <p>{thread.body}</p>
           </div>
         ))}
-        {isLogin && <Link to="/create" style={{ position: 'fixed', bottom: '10px', right: '10px' }}>tambah thread</Link>}
+        {isLogin && <Link to="/create" className="add-thread">Tambah Thread</Link>}
       </div>
     </div>
   );
