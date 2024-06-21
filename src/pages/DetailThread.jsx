@@ -25,17 +25,19 @@ function DetailThread() {
     }
   }, [created]);
   return (
-    <div>
-      <h1>DetailThread</h1>
+    <div className="detail-thread">
+      <h1>Detail Thread</h1>
       {thread && (
         <div>
+          <p>{thread.category}</p>
           <h1>{thread.title}</h1>
           <p>{thread.body}</p>
-          <p>{thread.category}</p>
-          <p>{formatDate(thread.createdAt)}</p>
-          <div style={{ display: 'flex' }}>
+          <div className="user-info">
             <img src={thread.owner?.avatar} alt="" />
-            <p>{thread.owner?.name}</p>
+            <div className="user-info-detail">
+              <p>{thread.owner?.name}</p>
+              <p>{formatDate(thread.createdAt)}</p>
+            </div>
           </div>
           <form onSubmit={handleSubmit}>
             <textarea

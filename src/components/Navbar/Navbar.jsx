@@ -17,39 +17,19 @@ function Navbar() {
     }
   }, [isLogin]);
   return (
-    <div className="navbar">
-      <Link to="/">Navbar</Link>
-      <div className="">
-        {profile && profile.avatar ? (
-          <div>
+    <div>
+      <div className="navbar">
+        <Link to="/">Forum Discussion for React Expert</Link>
+        <div className="navbar-info">
+          <div className="navbar-user-info">
             <img src={profile.avatar} alt="User Avatar" />
             <p>{profile.name}</p>
           </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-        {isLogin ? (
-          <button onClick={handleLogout} type="button">Logout</button>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
+          {isLogin ? <button onClick={handleLogout} type="button">Logout</button> : <Link to="/login">Login</Link>}
+        </div>
       </div>
     </div>
   );
-  // return (
-  //   <div>
-  //     <div className="navbar">
-  //       <Link to="/">Forum Discuss</Link>
-  //       <div className="navbar-info">
-  //         <div className="navbar-user-info">
-  //           <img src={profile.avatar} alt="User Avatar" />
-  //           <p>{profile.name}</p>
-  //         </div>
-  //         {isLogin ? <button onClick={handleLogout} type="button">Logout</button> : <Link to="/login">Login</Link>}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default Navbar;

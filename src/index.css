@@ -30,10 +30,10 @@ a:hover {
 }
 
 body {
-  display: flex;
+  /* display: flex; */
   place-items: center;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   
   /* min-width: 320px; */
 
@@ -110,12 +110,12 @@ button:focus-visible {
   border-radius: 100%;
 }
 
-.homepage {
+.homepage, .detail-thread {
   display: block;
   padding: 5rem 3rem;
 }
 
-.homepage > h1 {
+.homepage > h1, .detail-thread > h1 {
   padding-bottom: 30px;
 }
 
@@ -131,7 +131,7 @@ button:focus-visible {
   font-size: 1.75em;
 }
 
-.discuss-box .user-info {
+.discuss-box .user-info, .detail-thread .user-info {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -139,7 +139,7 @@ button:focus-visible {
   padding: 10px 0;
 }
 
-.discuss-box .user-info img {
+.user-info img {
   height: 2.5em;
   border-radius: 100px;
 }
@@ -150,6 +150,7 @@ button:focus-visible {
 
 
 .login-page, .register-page {
+  display: block;
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -217,4 +218,8 @@ button:focus-visible {
   position: 'fixed';
   bottom: '3rem';
   right: '3rem' 
+}
+
+.detail-thread {
+
 }
