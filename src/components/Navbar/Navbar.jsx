@@ -43,7 +43,7 @@ function Navbar() {
         <Link to="/">Forum Discuss</Link>
         <div className="navbar-info">
           <div className="navbar-user-info">
-            <img src={profile.avatar} alt="" />
+            <img src={profile.avatar} alt="User Avatar" />
             <p>{profile.name}</p>
           </div>
           {isLogin ? <button onClick={handleLogout} type="button">Logout</button> : <Link to="/login">Login</Link>}
