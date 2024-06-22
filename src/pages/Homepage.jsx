@@ -35,6 +35,7 @@ function Homepage() {
               </div>
             </div>
             <p>{thread.body}</p>
+            <p>{thread.upVotesBy}</p>
           </div>
         ))}
         {isLogin && <Link to="/create" className="add-thread">Tambah Thread</Link>}
