@@ -30,7 +30,7 @@ function Homepage() {
             <div className="user-info">
               <img src={users.find((user) => user.id === thread.ownerId).avatar} />
               <div className="user-info-detail">
-                <p>{users.find((user) => user.id === thread.ownerId).name}</p>
+                <p><b>{users.find((user) => user.id === thread.ownerId).name}</b></p>
                 <p>{formatDate(thread.createdAt)}</p>
               </div>
             </div>
