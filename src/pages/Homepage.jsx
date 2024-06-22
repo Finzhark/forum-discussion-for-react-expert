@@ -34,10 +34,10 @@ function Homepage() {
                 <p>{formatDate(thread.createdAt)}</p>
               </div>
             </div>
-            <p>{thread.body}</p>
             <p>{thread.upVotesBy}</p>
             <p>{thread.downVotesBy}</p>
             <p>{thread.totalComments}</p>
+            <p>{thread.body}</p>
           </div>
         ))}
         {isLogin && <Link to="/create" className="add-thread">Tambah Thread</Link>}
