@@ -59,6 +59,19 @@ const upVoteByThreadAsyncAction = (param) => {
   }
 }
 
+const downVoteByThreadAsyncAction = (param) => {
+  dispatch(showLoading())
+  try {
+    await api.downVoteThread(param.threadId)
+    dispatch(downVoteByThreadAction(param))
+  } catch (error) {
+    console.log(error)
+    throw error
+  } finally {
+    dispatch(hideLoading())
+  }
+}
+
 export {
-  getThreadsAndUsersAction, getThreadsAndUsersThunkAction, createThreadAction, createThreadThunkAction,
+  getThreadsAndUsersAction, getThreadsAndUsersThunkAction, createThreadAction, createThreadThunkAction, upVoteByThreadAsyncAction, downVoteByThreadAsyncAction 
 };
