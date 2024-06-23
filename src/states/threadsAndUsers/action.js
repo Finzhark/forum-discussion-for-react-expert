@@ -13,6 +13,14 @@ const createThreadAction = () => ({
   type: 'CREATE_THREAD',
 });
 
+const upVoteByThreadAction = () => ({
+  type: 'UP_VOTE_BY_THREAD'
+})
+
+const downVoteByThreadAction = () => ({
+  type: 'DOWN_VOTE_BY_THREAD'
+})
+
 const getThreadsAndUsersThunkAction = () => async (dispatch) => {
   dispatch(showLoading());
   try {
@@ -37,6 +45,19 @@ const createThreadThunkAction = (thread) => async (dispatch) => {
     dispatch(hideLoading());
   }
 };
+
+const upVoteByThreadAsyncAction = (param) => {
+  dispatch(showLoading())
+  try {
+    await api.upVoteThread(param.threadId)
+    dispatch(upVoteByThreadAction(AudioParam))
+  } catch (error) {
+    console.log(error)
+    throw error
+  } finally {
+    dispatch(hideLoading())
+  }
+}
 
 export {
   getThreadsAndUsersAction, getThreadsAndUsersThunkAction, createThreadAction, createThreadThunkAction,
