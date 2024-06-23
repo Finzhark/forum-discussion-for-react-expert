@@ -13,13 +13,20 @@ const createThreadAction = () => ({
   type: 'CREATE_THREAD',
 });
 
-const upVoteByThreadAction = () => ({
-  type: 'UP_VOTE_BY_THREAD'
-})
+const upVoteByThreadAction = (payload) => ({
+  type: 'UP_VOTE_BY_THREAD',
+  payload,
+});
 
-const downVoteByThreadAction = () => ({
-  type: 'DOWN_VOTE_BY_THREAD'
-})
+const downVoteByThreadAction = (payload) => ({
+  type: 'DOWN_VOTE_BY_THREAD',
+  payload,
+});
+
+const neutralizeThreadVoteAction = (payload) => ({
+  type: 'NEUTRALIZE_THREAD_VOTE',
+  payload,
+});
 
 const getThreadsAndUsersThunkAction = () => async (dispatch) => {
   dispatch(showLoading());
@@ -29,6 +36,7 @@ const getThreadsAndUsersThunkAction = () => async (dispatch) => {
     dispatch(getThreadsAndUsersAction({ users, threads }));
   } catch (error) {
     console.log(error);
+    throw error;
   } finally {
     dispatch(hideLoading());
   }
@@ -46,32 +54,51 @@ const createThreadThunkAction = (thread) => async (dispatch) => {
   }
 };
 
-const upVoteByThreadAsyncAction = (param) => {
-  dispatch(showLoading())
+const upVoteByThreadAsyncAction = (param) => async (dispatch) => {
+  dispatch(showLoading());
   try {
-    await api.upVoteThread(param.threadId)
-    dispatch(upVoteByThreadAction(AudioParam))
+    await api.upVoteThread(param.threadId);
+    dispatch(upVoteByThreadAction(param));
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   } finally {
-    dispatch(hideLoading())
+    dispatch(hideLoading());
   }
-}
+};
 
-const downVoteByThreadAsyncAction = (param) => {
-  dispatch(showLoading())
+const downVoteByThreadAsyncAction = (param) => async (dispatch) => {
+  dispatch(showLoading());
   try {
-    await api.downVoteThread(param.threadId)
-    dispatch(downVoteByThreadAction(param))
+    await api.downVoteThread(param.threadId);
+    dispatch(downVoteByThreadAction(param));
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   } finally {
-    dispatch(hideLoading())
+    dispatch(hideLoading());
   }
-}
+};
+
+const neutralizeThreadVoteAsyncAction = (param) => async (dispatch) => {
+  dispatch(showLoading());
+  try {
+    await api.neutralizeThreadVote(param.threadId);
+    dispatch(neutralizeThreadVoteAction(param));
+  } catch (error) {
+    console.log(error);
+    throw error;
+  } finally {
+    dispatch(hideLoading());
+  }
+};
 
 export {
-  getThreadsAndUsersAction, getThreadsAndUsersThunkAction, createThreadAction, createThreadThunkAction, upVoteByThreadAsyncAction, downVoteByThreadAsyncAction 
+  getThreadsAndUsersAction,
+  getThreadsAndUsersThunkAction,
+  createThreadAction,
+  createThreadThunkAction,
+  upVoteByThreadAsyncAction,
+  downVoteByThreadAsyncAction,
+  neutralizeThreadVoteAsyncAction,
 };

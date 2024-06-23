@@ -4,17 +4,48 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import formatDate from '../utils/formatdate';
-import { getThreadsAndUsersThunkAction } from '../states/threadsAndUsers/action';
+import {
+  getThreadsAndUsersThunkAction,
+  upVoteByThreadAsyncAction,
+  downVoteByThreadAsyncAction,
+  neutralizeThreadVoteAsyncAction,
+} from '../states/threadsAndUsers/action';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Homepage() {
   const { threads, users } = useSelector((state) => state.threadsAndUsers);
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, profile } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleDetail = (id) => {
     navigate(`/detail/${id}`);
+  };
+
+  const handleNeutralizeThreadVote = (threadId) => {
+    dispatch(
+      neutralizeThreadVoteAsyncAction({
+        threadId, userId: profile.id,
+      }),
+    );
+  };
+
+  const handleUpVoteThread = (threadId) => {
+    const selectedThread = threads.find((thread) => thread.id === threadId);
+    if (!selectedThread.upVotesBy.includes(profile.id)) {
+      dispatch(upVoteByThreadAsyncAction({ threadId, userId: profile.id }));
+    } else {
+      handleNeutralizeThreadVote(threadId);
+    }
+  };
+
+  const handleDownVoteThread = (threadId) => {
+    const selectedThread = threads.find((thread) => thread.id === threadId);
+    if (!selectedThread.downVotesBy.includes(profile.id)) {
+      dispatch(downVoteByThreadAsyncAction({ threadId, userId: profile.id }));
+    } else {
+      handleNeutralizeThreadVote(threadId);
+    }
   };
 
   useEffect(() => {
@@ -34,9 +65,14 @@ function Homepage() {
                 <p>{formatDate(thread.createdAt)}</p>
               </div>
             </div>
-            <p>{thread.upVotesBy}</p>
-            <p>{thread.downVotesBy}</p>
-            <p>{thread.totalComments}</p>
+            <button type="button" onClick={() => handleUpVoteThread(thread.id)}>
+              <p>up</p>
+              <p>{thread.upVotesBy.length}</p>
+            </button>
+            <button type="button" onClick={() => handleDownVoteThread(thread.id)}>
+              <p>down</p>
+              <p>{thread.downVotesBy.length}</p>
+            </button>
             <p>{thread.body}</p>
           </div>
         ))}

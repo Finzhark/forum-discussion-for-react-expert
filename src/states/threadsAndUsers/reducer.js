@@ -18,6 +18,48 @@ const threadsAndUsersReducer = (state = initState, action) => {
         ...state,
         created: true,
       };
+    case 'UP_VOTE_BY_THREAD':
+      return {
+        ...state,
+        threads: state.threads.map((thread) => {
+          if (thread.id === action.payload.threadId) {
+            return {
+              ...thread,
+              upVotesBy: [...thread.upVotesBy, action.payload.userId],
+              downVotesBy: thread.downVotesBy.filter((id) => id !== action.payload.userId),
+            };
+          }
+          return thread;
+        }),
+      };
+    case 'DOWN_VOTE_BY_THREAD':
+      return {
+        ...state,
+        threads: state.threads.map((thread) => {
+          if (thread.id === action.payload.threadId) {
+            return {
+              ...thread,
+              downVotesBy: [...thread.downVotesBy, action.payload.userId],
+              upVotesBy: thread.upVotesBy.filter((id) => id !== action.payload.userId),
+            };
+          }
+          return thread;
+        }),
+      };
+    case 'NEUTRALIZE_THREAD_VOTE':
+      return {
+        ...state,
+        threads: state.threads.map((thread) => {
+          if (thread.id === action.payload.threadId) {
+            return {
+              ...thread,
+              upVotesBy: thread.upVotesBy.filter((id) => id !== action.payload.userId),
+              downVotesBy: thread.downVotesBy.filter((id) => id !== action.payload.userId),
+            };
+          }
+          return thread;
+        }),
+      };
     default:
       return state;
   }

@@ -25,19 +25,19 @@ function CreateThread() {
     }
   }, [created]);
   return (
-    <div>
-      <h1>CreateThread</h1>
+    <div className="create-thread">
+      <h1>Membuat Thread Baru</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="title">title</label>
+          <label htmlFor="title">Judul</label>
           <input type="text" id="title" name="title" onChange={(event) => setTitle(event.target.value)} value={title} />
         </div>
         <div>
-          <label htmlFor="body">body</label>
-          <input type="text" id="body" name="body" onChange={(event) => setBody(event.target.value)} value={body} />
+          <label htmlFor="body">Isinya apa?</label>
+          <textarea type="text" id="body" name="body" onChange={(event) => setBody(event.target.value)} value={body} />
         </div>
         <div>
-          <label htmlFor="category">category</label>
+          <label htmlFor="category">Kategori</label>
           <input
             type="text"
             id="category"

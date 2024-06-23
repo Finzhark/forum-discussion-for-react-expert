@@ -1,14 +1,52 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCommentThunkAction, getThreadDetailThunkAction } from '../states/detailThread/action';
+import {
+  createCommentThunkAction,
+  getThreadDetailThunkAction,
+  upVoteByThreadDetailAsyncAction,
+  downVoteByThreadDetailAsyncAction,
+  neutralizeThreadVoteDetailAsyncAction,
+} from '../states/detailThread/action';
 import { useParams } from 'react-router-dom';
 import formatDate from '../utils/formatdate';
 
 function DetailThread() {
   const { thread, created } = useSelector((state) => state.threadDetail);
+  const { profile } = useSelector((state) => state.auth);
   const { id } = useParams();
   const [content, setContent] = React.useState('');
   const dispatch = useDispatch();
+
+  const handleNeutralizeThreadVote = (threadId) => {
+    dispatch(
+      neutralizeThreadVoteDetailAsyncAction({
+        threadId,
+        userId: profile.id,
+      }),
+    );
+  };
+
+  const handleUpVoteThread = (threadId) => {
+    if (!thread.upVotesBy.includes(profile.id)) {
+      dispatch(upVoteByThreadDetailAsyncAction({
+        threadId,
+        userId: profile.id,
+      }));
+    } else {
+      handleNeutralizeThreadVote(threadId);
+    }
+  };
+
+  const handleDownVoteThread = (threadId) => {
+    if (!thread.downVotesBy.includes(profile.id)) {
+      dispatch(downVoteByThreadDetailAsyncAction({
+        threadId,
+        userId: profile.id,
+      }));
+    } else {
+      handleNeutralizeThreadVote(threadId);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,6 +77,16 @@ function DetailThread() {
               <p>{formatDate(thread.createdAt)}</p>
             </div>
           </div>
+          <div>
+            <button type="button" onClick={() => handleUpVoteThread}>
+              <p>Up</p>
+              <p>{thread.upVotesBy?.length}</p>
+            </button>
+            <button type="button" onClick={() => handleDownVoteThread}>
+              <p>Down</p>
+              <p>{thread.downVotesBy?.length}</p>
+            </button>
+          </div>
           <form onSubmit={handleSubmit}>
             <textarea
               name="content"
@@ -52,12 +100,11 @@ function DetailThread() {
               Comment
             </button>
           </form>
-          <p>{thread.comments?.length}</p>
           {thread.comments?.map((comment) => (
             <div key={comment.id}>
               <p>{comment.content}</p>
               <p>{formatDate(comment.createdAt)}</p>
-              <div style={{ display: 'flex' }}>
+              <div className="flex">
                 <img src={comment.owner?.avatar} alt="" />
                 <p>{comment.owner?.name}</p>
               </div>

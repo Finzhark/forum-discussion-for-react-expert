@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoute from './components/PrivateRoutes/PrivateRoute';
 import PublicRoutes from './components/PublicRoutes/PublicRoutes';
+import Leaderboards from './pages/Leaderboard';
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
       {
         path: '/create',
         element: <CreateThread />,
+      },
+      {
+        path: '/leaderboards',
+        element: <Leaderboards />,
       },
     ],
   },
@@ -38,6 +43,10 @@ const routes = [
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/leaderboards',
+        element: <Leaderboards />,
       },
     ],
   },

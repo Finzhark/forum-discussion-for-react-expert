@@ -21,6 +21,7 @@ function Navbar() {
       <div className="navbar">
         <Link to="/">Forum Discussion for React Expert</Link>
         <div className="navbar-info">
+          <Link to="/leaderboards">Leaderboard</Link>
           <div className="navbar-user-info">
             <img src={profile.avatar} alt="User Avatar" />
             <p>{profile.name}</p>
