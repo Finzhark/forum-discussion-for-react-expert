@@ -11,6 +11,7 @@ import {
   neutralizeThreadVoteAsyncAction,
 } from '../states/threadsAndUsers/action';
 import { Link, useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 function Homepage() {
   const { threads, users } = useSelector((state) => state.threadsAndUsers);
@@ -73,7 +74,7 @@ function Homepage() {
               <p>down</p>
               <p>{thread.downVotesBy.length}</p>
             </button>
-            <p>{thread.body}</p>
+            <p>{parse(thread.body)}</p>
           </div>
         ))}
         {isLogin && <Link to="/create" className="add-thread">Tambah Thread</Link>}

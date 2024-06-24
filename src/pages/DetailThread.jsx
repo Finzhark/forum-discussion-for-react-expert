@@ -9,6 +9,7 @@ import {
 } from '../states/detailThread/action';
 import { useParams } from 'react-router-dom';
 import formatDate from '../utils/formatdate';
+import parse from 'html-react-parser';
 
 function DetailThread() {
   const { thread, created } = useSelector((state) => state.threadDetail);
@@ -69,7 +70,7 @@ function DetailThread() {
         <div>
           <p>{thread.category}</p>
           <h1>{thread.title}</h1>
-          <p>{thread.body}</p>
+          <p>{parse(thread.body)}</p>
           <div className="user-info">
             <img src={thread.owner?.avatar} alt="" />
             <div className="user-info-detail">
