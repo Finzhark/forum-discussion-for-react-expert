@@ -10,6 +10,7 @@ import {
 import { useParams } from 'react-router-dom';
 import formatDate from '../utils/formatdate';
 import parse from 'html-react-parser';
+import { FaThumbsUp, FaThumbsDown, FaCommentDots } from 'react-icons/fa';
 
 function DetailThread() {
   const { thread, created } = useSelector((state) => state.threadDetail);
@@ -68,9 +69,8 @@ function DetailThread() {
       <h1>Detail Thread</h1>
       {thread && (
         <div>
-          <p>{thread.category}</p>
+          <p className="category">{thread.category}</p>
           <h1>{thread.title}</h1>
-          <p>{parse(thread.body)}</p>
           <div className="user-info">
             <img src={thread.owner?.avatar} alt="" />
             <div className="user-info-detail">
@@ -78,15 +78,20 @@ function DetailThread() {
               <p>{formatDate(thread.createdAt)}</p>
             </div>
           </div>
-          <div>
-            <button type="button" onClick={() => handleUpVoteThread}>
-              <p>Up</p>
+          <p>{thread.body ? parse(thread.body) : ''}</p>
+          <div className="among-button">
+            <p className="thumbs-only" onClick={() => handleUpVoteThread}>
               <p>{thread.upVotesBy?.length}</p>
-            </button>
-            <button type="button" onClick={() => handleDownVoteThread}>
-              <p>Down</p>
+              <FaThumbsUp />
+            </p>
+            <p className="thumbs-only" onClick={() => handleDownVoteThread}>
               <p>{thread.downVotesBy?.length}</p>
-            </button>
+              <FaThumbsDown />
+            </p>
+            <div className="thumbs-and-bubble">
+              <p>{thread.comments?.length}</p>
+              <FaCommentDots />
+            </div>
           </div>
           <form onSubmit={handleSubmit}>
             <textarea
@@ -102,13 +107,15 @@ function DetailThread() {
             </button>
           </form>
           {thread.comments?.map((comment) => (
-            <div key={comment.id}>
-              <p>{comment.content}</p>
-              <p>{formatDate(comment.createdAt)}</p>
-              <div className="flex">
+            <div key={comment.id} className="comment-box">
+              <div className="user-info">
                 <img src={comment.owner?.avatar} alt="" />
-                <p>{comment.owner?.name}</p>
+                <div className="user-info-detail">
+                  <p>{comment.owner?.name}</p>
+                  <p>{formatDate(comment.createdAt)}</p>
+                </div>
               </div>
+              <p>{comment.content}</p>
             </div>
           ))}
         </div>

@@ -12,6 +12,7 @@ import {
 } from '../states/threadsAndUsers/action';
 import { Link, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
+import { FaThumbsUp, FaThumbsDown, FaCommentDots } from 'react-icons/fa';
 
 function Homepage() {
   const { threads, users } = useSelector((state) => state.threadsAndUsers);
@@ -66,14 +67,20 @@ function Homepage() {
                 <p>{formatDate(thread.createdAt)}</p>
               </div>
             </div>
-            <button type="button" onClick={() => handleUpVoteThread(thread.id)}>
-              <p>up</p>
-              <p>{thread.upVotesBy.length}</p>
-            </button>
-            <button type="button" onClick={() => handleDownVoteThread(thread.id)}>
-              <p>down</p>
-              <p>{thread.downVotesBy.length}</p>
-            </button>
+            <div className="among-button">
+              <p className="thumbs-and-bubble" onClick={() => handleUpVoteThread(thread.id)}>
+                <p>{thread.upVotesBy.length}</p>
+                <FaThumbsUp />
+              </p>
+              <p className="thumbs-and-bubble" onClick={() => handleDownVoteThread(thread.id)}>
+                <p>{thread.downVotesBy.length}</p>
+                <FaThumbsDown />
+              </p>
+              <div className="thumbs-and-bubble">
+                <FaCommentDots />
+                <p>{thread.id.comments?.length}</p>
+              </div>
+            </div>
             <p>{parse(thread.body)}</p>
           </div>
         ))}
