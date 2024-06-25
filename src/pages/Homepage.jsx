@@ -78,7 +78,7 @@ function Homepage() {
               </p>
               <div className="thumbs-and-bubble">
                 <FaCommentDots />
-                <p>{thread.id.comments?.length}</p>
+                <p>{thread.totalComments}</p>
               </div>
             </div>
             <p>{parse(thread.body)}</p>
