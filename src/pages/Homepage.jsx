@@ -77,8 +77,8 @@ function Homepage() {
                 <FaThumbsDown />
               </p>
               <div className="thumbs-and-bubble">
-                <FaCommentDots />
                 <p>{thread.totalComments}</p>
+                <FaCommentDots />
               </div>
             </div>
             <p>{parse(thread.body)}</p>
